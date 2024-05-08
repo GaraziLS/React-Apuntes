@@ -91,7 +91,7 @@ export default function() {
     )
 }
 ```
-Now we're gonna import it to the container, which in turn is imported from the app file:
+Now we're gonna export it to the container, which in turn is imported from the app file:
 
 ```
 import React, {Component} from "react";
