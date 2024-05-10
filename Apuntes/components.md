@@ -91,7 +91,7 @@ export default function() {
     )
 }
 ```
-Now we're gonna import it to the container, which in turn is imported from the app file:
+Now we're gonna export it to the container, which in turn is imported from the app file:
 
 ```
 import React, {Component} from "react";
@@ -138,11 +138,11 @@ Classes extend from components, so the super method allows to call the parent cl
 
 ### Custom functions in React and looping
 
-Looping through data and then rendering it is quite common, to avoid hardcoding and to generate things dinamically.
+Looping through data and then rendering it is quite common, to avoid hardcoding and to generate things dynamically.
 
 To do this in React we'll use the map function, so we might have this: data, with the map function, that has a key and an arrow function inside it as arguments:
 
-> The map function always return something. 
+> The map function always returns something. 
 > Item is prefixed with an undercore because otherwise it is never read despite being declared.
 
 ```
@@ -203,7 +203,7 @@ Props (short for properties) are the way that you can pass data from one parent 
     }
 ```
 
-We now need the component itself to be able to render the prop in the page. To do this we must go to the component and inside the function pass the prop element:
+We now need the component itself to be able to render the prop in the page. To do this we must go to the component and inside the function pass the prop element via the reserved word props:
 
 ```
 export default function(props) {
@@ -213,7 +213,7 @@ export default function(props) {
 }
 ```
 
-However this will throw an error because props is an object and objects aren't valid as react childs. We need to call the prop itself (the tag, not the content) inside the component too:
+However this will throw an error because props is an object and objects aren't valid as react children. We need to call the prop itself (the tag, not the content) inside the component too:
 
 ```
 export default function(props) {
