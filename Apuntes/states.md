@@ -63,6 +63,57 @@ export default class PortfolioContainer extends Component {
 
 Then we update the *portfolioItems()* function to call this state (the key is needed inside the prop because the function now refers to the state), and the loop will still work.
 
+>  To avoid confusions with this.state we can do this:
+
+```
+render() {
+    const {ComponentName, AnotherComp} = this.state
+}
+```
+
+This way we can call it by name, as if it was a normal variable (remember to add the curly brackets inside render() if JS code is written)
+
+```
+render(...) {
+   } return <h1>{ComponentName}</h1>
+```
+
+Object deconstruction can be performed as well:
+
+```
+render(...) {
+   } return <h1>{ComponentName}</h1>
+   <h2>{AnotherComp}</h2>
+```
+
+> How to set up a timer that updates automatically:
+>```
+>componentDidMount() {
+>  setInterval(() => {
+>    this.setState({ currentTime: String(new Date())});
+>  }, 1000);
+>}
+>```
+
+You can also store this in a variable:
+
+```
+componentDidMount() {
+  this.liveTime = setInterval(() => {
+    console.log("New chat message");
+
+    this.setState({ currentTime: String(new Date())});
+  }, 1000);
+}
+```
+
+You should clean things from time to time to avoid performance issues:
+
+```
+componentWillUnmount() {
+  clearInterval(this.liveTime);
+}
+```
 
 ## Deep dive 1: states, props and components
 
