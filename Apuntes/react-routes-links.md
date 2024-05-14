@@ -26,6 +26,20 @@ export default class App extends Component {
 Inside the switch we'll call the Route component, which will have a path ponting to a slash. This will represent our homepage (also known as route root), but we'll have to create the page itself. To do this we'll create a pages folder, and then we'll export those components to *app.js*.
 
 ```
+import React, { Component } from 'react';
+import moment from "moment";
+import {BrowserRouter as  Router, Switch, Route } from "react-router-dom"
+
+
+import NavigationContainer from './Navigation/navigation-container';
+import Home from "./pages/homepage";
+import About from "./pages/about";
+import Contact from "./pages/contact";
+import Blog from "./pages/blog";
+import PortfolioDetail from "./portfolio-components/portfolio-detail"
+import NoMatch from "./pages/no-match"
+
+export default class App extends Component {
 render() {
     return (
       <div className='app'>
@@ -41,9 +55,10 @@ render() {
         
         </Router>
     )}
+}
 ```
 
-> The route paths can be named like you want, what matters is the component itself.
+> The route paths can be named like you want, what matters is the component itself (which is imported above).
 
 The route component is already imported above, and it takes props such as path.
 
@@ -89,7 +104,7 @@ The syntax for NavLinks is pretty similar to routes. They're called inside the r
 
 > The navigation container has the Navlinks themselves. The routes, however, are specified in app.js.
 
-> If we used a regular <a> tag there would be issues.
+> If we used a regular < a > tag there would be issues.
 
 ## Navlinks' active status
 
@@ -114,6 +129,92 @@ export default function() {
 }
 ```
 
-The Link component is more specific than vanilla <a> links. When clicking on it it doesn't reload, nor does get the active class like Navlinks. (Could be usable as dropdown menus?)
+The Link component is more specific than vanilla < a > links. When clicking on it it doesn't reload, nor does get the active class like Navlinks. (Could be usable as dropdown menus?)
 
 > PortfolioContainer got moved from app.js to the homepage component, so now it will have its own separate page.
+
+## Access URL values im React
+
+We're going to access data inside the items too in order to get more information about a specified item.
+
+To do so, inside of the app.js we're going to add another route.
+
+```
+<Route exact path="/portfolio/:slug" component={PortfolioItem}/>
+```
+
+> :slug is the naming convention for custom URL endpoints. Another one is permalink.
+
+With all of that and after creating the new component we can type the url endpoint into the bar and we'll be redirected to the portfolio detail item. How do we access to the data though? 'cause the APIs need to know what data to bring back.
+
+To access data, props are the key. Inside the *portfolio-detail.js* component we're going to pass props to the function, and then we're going to type ```{props.match.params.slug}``` to get the custom endpoint.
+
+```
+export default function(props) {
+    return(
+    <div>
+        <h2>Portfolio Detail for {props.match.params.slug}</h2>
+    </div>
+    );
+   }
+   ```
+
+This will get us the url custom endpoint, but we also want a link to those pages. Before doing that though, we'll add more data to the data object of the *portfolio-container.js* to mimic what APIs do.
+
+```
+this.state = {
+  pageTitle: "Welcome to my portfolio",
+   data: [
+      {title: "First", category: "eCommerce", slug: "first"},
+       {title: "Second", category: "eCommerce", slug: "second"},
+       {title: "third", category: "Personal", slug: "third"}, 
+       {title: "fourth", category: "Hobby", slug: "fourth"}
+      ],
+}
+```
+
+We'll also update the PorfolioItems()' components to add the slug as a prop and to the _item:
+
+```
+ portfolioItems() {
+    return this.state.data.map(item => {
+      return (
+        <PortfolioItem title={item.title} url={"google.com"} slug={item.slug} />
+      );
+    });
+  }
+
+```
+
+In the portfolio-item.js component, we'll now add a link and use string interpolation in the path to add props.slug (the object key).
+
+```
+export default function(props) {
+    return(
+        <div><h3>{props.title}</h3>
+        <h4>{props.url}</h4>
+
+        <Link to={`/portfolio/${props.slug}`}>Link</Link>
+        </div>
+    );
+}
+
+```
+
+> (We add curly brackets because this is JS code)
+
+We now have functional dynamic links that redirect to each component.
+
+## Implementing a catch all route with react router
+
+What happens when a route doesn't exist? In some languages/frameworks that would throw an error in the server, but in React we only have one page, and a wrong route still shows the page. Some feedback would be greate to indicate that that page doesn't exist, so we'll create another component called NoMatch, and in the route section we'll create another one.
+
+When a route doesn't have a path that will be the one that's picked up:
+
+```
+<Route component={NoMatch}></Route>
+```
+> Never put this kind of routes at the very top of the switch statement, because this would be the route captured instead. It's like saying *No matches found, pick this one instead as default*. It's like an else.
+
+
+
