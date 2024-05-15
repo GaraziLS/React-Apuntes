@@ -59,7 +59,7 @@ axios.get('https://subdomain.devcamp.space/portfolio/portfolio_items')
   }
 ```
 
-Now we'll change the ```.then(function (response) {...}``` portion with an arrow function. This is specific to react. 
+Now we'll change the ```.then(function (response) {...}``` portion, as well as the error one, with an arrow function. This is specific to react. 
 
 ```
 axios.get('https://subdomain.devcamp.space/portfolio/portfolio_items')
@@ -198,7 +198,7 @@ export default class PortfolioContainer extends Component {
 
 ## Rendering API data in react
 
-We're going to render data on the screen, so the hard-coded data entry points can be now deleted. The data's initial state will start empty. When the API call comes, the state will be updated.
+We're going to render data on the screen, so the hard-coded data entry points can now be deleted. The data's initial state will start empty. When the API call comes, the state will be updated.
 
 ```
 export default class PortfolioContainer extends Component {
@@ -216,7 +216,7 @@ We're also going to remove the getPortfolioItems() bind because we're not going 
 
 ```
 portfolioItems() {
-        return this.state.data.map(item => { // looping through data (that is now calling the API)
+        return this.state.data.map(item => { // looping through data 
           return (
             <PortfolioItem title={item.title} url={"google.com"} slug={item.slug} />
           );
@@ -290,4 +290,4 @@ The key prop is what react uses to keep track of elements. We can treat it like 
 <PortfolioItem key={item.id} title={item.name} url={item.url} slug={item.id}
 ```
 
-Now the warning in the console will
+Now the warning in the console will be gone.
