@@ -290,4 +290,4 @@ The key prop is what react uses to keep track of elements. We can treat it like 
 <PortfolioItem key={item.id} title={item.name} url={item.url} slug={item.id}
 ```
 
-Now the warning in the console will be gone.
+Now the warning in the console will
