@@ -12,4 +12,4 @@
 
 ## Custom fonts in React
 
-Bring fonts from google fonts into the index.html file (that file is in the static directory) and then copy the code into the scss file. Remember to remove everything from the base scss file.
+Bring fonts from google fonts into the index.html file (that file is in the static directory) and then copy the code into the scss file. Remember to remove everything from the base scss file to avoid issues.
