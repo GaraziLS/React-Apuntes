@@ -13,3 +13,36 @@
 ## Custom fonts in React
 
 Bring fonts from google fonts into the index.html file (that file is in the static directory) and then copy the code into the scss file. Remember to remove everything from the base scss file to avoid issues.
+
+## Fexbox in React
+
+We're gonna create a scss file called navigation. The classes required to make the styles work will go into the navigation-container.js file to write the classes. It's important to note that all of this will go in a single class. Now, the class word is a reserved one in react, so we can't say ```<div class=""></div>``` as usual. Instead, we'll put a **className**.
+
+> Remember to add an active class to links' (navlinks) divs in order to create an effect when that link is clicked.
+
+```
+render() {
+        return (
+           <div className='nav-wrapper'>
+            <div className='left-side'>
+                <div className='navlink-wrapper'>
+                    <NavLink exact to="/">Home</NavLink>
+                </div>
+                <div className='navlink-wrapper'>
+                    <NavLink exact to="/about-me">About</NavLink>
+                </div>
+                <div className='navlink-wrapper'>
+                    <NavLink exact to="/contact">Contact</NavLink>
+                </div>
+                <div className='navlink-wrapper'>
+                    <NavLink exact to="/blog">Blog</NavLink>
+                </div>
+        );
+    };
+```
+
+> React doesn't have < a > tags, but the chrome console transforms react to regular HTML and thus you can select those tags as usual.
+
+## Variables in scss
+
+> Instead of typing hexadecimal colors, you can rename them using ````$name```.
