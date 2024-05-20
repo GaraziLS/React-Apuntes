@@ -163,10 +163,6 @@ export default class PortfolioContainer extends Component {
        // handle error
        console.log(error);
       })
-     
-    .finally(function () {
-      // always executed
-    });
       }
 
     portfolioItems() {

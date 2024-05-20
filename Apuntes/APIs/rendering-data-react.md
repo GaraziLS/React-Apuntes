@@ -133,7 +133,8 @@ item
 
 > The object is accessible through Chrome's dev tool fonts, with the debugger mode active.
 
-<!-- 0: "id"
+```
+0: "id"
 1: "name"
 2: "description"
 3: "url"
@@ -143,7 +144,8 @@ item
 7: "banner_image_url"
 8: "logo_url"
 9: "column_names_merged_with_images"
-length: 10 -->
+length: 10 
+```
 
 We also have the ability to pass an object as the key inside props.
 
