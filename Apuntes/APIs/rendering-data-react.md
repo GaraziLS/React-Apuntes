@@ -192,9 +192,9 @@ This is possible because of the de-structuring, because we grabbed the id direct
 Rendering images from an API is very similar to vanilla HTML. In the portfolio-item, we'll type this (remenber the de-structuring):
 
 ```
-const {id, description, thumb_image_url, logo} = props.item
+const {id, description, thumb_image_url, logo_url} = props.item
     return(
         <div>
             <img src={thumb_image_url}/>
-            <img src={logo}/>
+            <img src={logo_url}/>
 ```

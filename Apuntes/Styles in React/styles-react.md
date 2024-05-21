@@ -18,7 +18,7 @@ Bring fonts from google fonts into the index.html file (that file is in the stat
 
 We're gonna create a scss file called navigation. The classes required to make the styles work will go into the navigation-container.js file to write the classes. It's important to note that all of this will go in a single class. Now, the class word is a reserved one in react, so we can't say ```<div class=""></div>``` as usual. Instead, we'll put a **className**.
 
-> Remember to add an active class to links in order to create an effect when that link is clicked.
+> Remember to add an active class to navlinks and right after the route in order to create an effect when that link is clicked.
 
 ```
 render() {
@@ -65,3 +65,123 @@ We're in the portfolio-item.js file and:
 > Inside of that style we need to pass the item component like this: ```"url(" + thumb_image_url + ")"```
 
 Now we just have to add styles.
+
+## Overlaying text and images on background images in React
+
+In the portfolio-item.js file, we'll write this:
+
+```
+<div className="img-text-wrapper">
+          <div className="logo-wrapper">
+            <img src={logo_url}/>
+          </div>
+
+        <div className="subtitle">{description}</div>
+        </div>
+    </div>
+```
+
+And then add styles.
+
+> To use *position: absolute*, the parent must have *position: relative*.
+
+```
+.img-text-wrapper {
+      position: absolute;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      text-align: center;
+      padding-left: 100px;
+      padding-right: 100px;
+
+      .subtitle {
+        transition: 1s ease-in-out;
+        color: transparent;
+      }
+    }
+
+    .img-text-wrapper:hover .subtitle {
+      color: $teal;
+      font-weight: 400;
+    }
+
+    .logo-wrapper img {
+      width: 50%;
+      margin-bottom: 20px;
+    }
+  ```
+
+## Updating styles by adding event listeners
+
+In the *portfolio-item.js* file, we're going to convert the functional component into a class component to manipulate state. So from this:
+
+```
+export default function(props) {
+  const { id, description, thumb_image_url, logo_url } = props.item;
+  return (
+    <div className="portfolio-item-wrapper">
+      <div
+        className="portfolio-img-background"
+        style={{
+            backgroundImage: "url(" + thumb_image_url + ")"
+        }}
+      />
+  )}
+```
+
+to this:
+
+```
+export default class PortfolioItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      portfolioItemClass: ""
+    };
+  }}
+```
+
+Then we'll create functions which later on will change the state:
+
+```
+handleMouseEnter() {
+    this.setState({ portfolioItemClass: "image-blur" });
+  }
+
+  handleMouseLeave() {
+    this.setState({ portfolioItemClass: "" });
+  }
+```
+
+To make the functions work we'll add event listeners and pass in the functions:
+
+```
+return (
+      <div
+        className="portfolio-item-wrapper"
+        onMouseEnter={() => this.handleMouseEnter()}
+        onMouseLeave={() => this.handleMouseLeave()}
+      >
+)
+```
+
+And now we're going to add that class dynamically:
+
+
+```
+<div
+          className={
+            "portfolio-img-background " + this.state.portfolioItemClass
+          }
+```
+
+## Using mixins to create button styles
+
+In the *portfolio-container.js* component, we're gonna add a class to the buttons. Then we're going to create a mixins style page (remember that order of loading is scss is important, so put that file below the variables)
+
+> In scss, when using actions (pseudo-classes?) you need to use the ampersand and then the colon: ```&:pseudo-class```.
