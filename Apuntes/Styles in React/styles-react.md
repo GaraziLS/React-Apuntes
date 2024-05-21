@@ -185,3 +185,20 @@ And now we're going to add that class dynamically:
 In the *portfolio-container.js* component, we're gonna add a class to the buttons. Then we're going to create a mixins style page (remember that order of loading is scss is important, so put that file below the variables)
 
 > In scss, when using actions (pseudo-classes?) you need to use the ampersand and then the colon: ```&:pseudo-class```.
+
+## Add static images in React
+
+The images must be in the src > static directory > assets > images. This isn't required, it's just for organization purposes.
+
+In the *Auth.js* file we're going to type this to pass the image in inside the string interpolation (after importing it as a component):
+
+```
+import loginImg from "../../../static/assets/images/Auth/login.jpg";
+
+className='left-column'
+  style={{
+      backgroundImage: `url(${})`
+  }}
+```
+
+> Dots are for jumping between directories, just get the right amount by trial and error.
