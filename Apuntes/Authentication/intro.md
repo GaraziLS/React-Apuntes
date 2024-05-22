@@ -111,6 +111,8 @@ Repeat the process for the password:
 
 ```
 
+## Change handler
+
 Now we'll work with the two handlers. Remember to bind the functions to the component:
 
 ```
@@ -149,3 +151,27 @@ export default class Login extends Component {
   ```
 
   Now the fields are being updated.
+
+## Submit handler
+
+We know on the API side what we're going to have to do is send this data, this username or this email and this password, we're gonna have to send that to the API. That means that we're gonna need to access state and that we're also going to have to understand exactly how the form submission process works. So that's what we're gonna work on in this guide and then in one of the next guides, we'll actually connect to the API and login.
+
+Now we're going to work with the submit handler. Inside the handleSubmit we'll add ```event.preventDefault()``` to avoid issues (without this the console would redirect instead, putting the password and the email in the url):
+
+```
+ handleSubmit(event) {
+    console.log("Handle submit", event);
+    event.preventDefault();
+  }
+```
+
+So what we're doing is we're saying that I want you to find this event and then I do not want you to refresh the page, I don't want you to follow your default behavior, I don't want you to put this email and this password in the URL bar, those kinds of things.
+
+Now instead of the event we're going to access the state directly and print it on the console.
+
+```
+handleSubmit(event) {
+    console.log("Handle submit", this.state.email, this.state.password);
+    event.preventDefault();
+  }
+```
