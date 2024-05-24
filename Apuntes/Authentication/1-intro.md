@@ -1,6 +1,6 @@
 ## What's authentication?
 
-Authentication is a way of identifying yourself. It often requires a user to first sign up and then log in. In a portfolio only the owner should log in, so it won't be visibe to other users and if someone tries to enter an error is going to pop up. First we're going to create the component inside the *app.js* file, as well as importing in from the app and creating its route:
+Authentication is a way of identifying yourself. It often requires a user to first sign up and then log in. In a portfolio only the owner should log in, so it won't be visibe to other users and if someone tries to enter an error is going to pop up. First we're going to create the page component inside the **app.js** file, as well as importing in from the app and creating its route:
 
 ```
 import Auth from "./pages/auth"
@@ -85,7 +85,7 @@ Inside the curly brackets we're going to pass a function **WITH NO PARENTHESES**
 <form onSubmit={this.handleSubmit}>
 ```
 
-We'll now add a name to the form (can be renamed), and a placeholder that will add a default message to the fields, and a value that must match up the state. Finally, we'll add the event handler:
+We'll now add a name to the form (can be renamed), and a placeholder that will add a default message to the fields, and a value that must match up the state. Finally, we'll add the event handler within onChange, which will update the state every time we type in the input field:
 
 ```
 <form onSubmit={this.handleSubmit}>
@@ -132,11 +132,11 @@ export default class Login extends Component {
 
   Now, if you write in the fields no text will render. Everytime we're typing we are setting the value of *this.state.email*. So, this value is overriding everything, which means that because we're not updating the value, it is always remaining just an empty string.
 
-  To fix this we'll come to the handlers and set state inside them:
+  To fix this we'll come to the handlers and set state inside them. However, we must add something else to tell the program which input (email or password) is being updated.
 
-  We can dynamically change and pick the name that we're getting. So, the event has what is called a target. So, I can say *event.target.name*, and what this is gonna do is it's going to pick up the event that we got, this change event it's gonna pick up a target and then that target has attributes.
+  To do this, we'll use the name of the input, ```event.target.name```. If the user is writing in the email field the email will be updated and so on.
 
-  In the chrome console, in the SyntheticEvent object, there's a target object. If, with the debugger on, we look for the event (by typing it), we'll see that the target has a name value. 
+  > We can dynamically change and pick the name that we're getting. So, the event has what is called a target. So, I can say *event.target.name*, and what this is gonna do is it's going to pick up the event that we got, this change event it's gonna pick up a target and then that target has attributes. In the chrome console, in the SyntheticEvent object, there's a target object. If, with the debugger on, we look for the event (by typing it), we'll see that the target has a name value. 
 
   But we first have to wrap up the event.target.name in brackets.
 

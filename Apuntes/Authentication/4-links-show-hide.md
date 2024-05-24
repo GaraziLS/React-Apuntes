@@ -49,4 +49,22 @@ Now inside of the dynamicLink function we'll call that prop and pass a ternary o
 
 Now when we're logged in we'll see the Blog link, and when we're not logged in not, but the route will stil exist. In the next guide we're going to pull out the guide if the user isn't logged in.
 
+## Route guards
+
+When showing and hiding links the routes aren't affected. Now we're going to change that. In the **app.js** file, below the ComponentDidMount(), we'll create another function and pass the blog route in:
+
+```
+AuthorisedPages() {
+    return [
+      <Route exact path="/blog" component={Blog}/>
+    ]
+  }
+```
+
+And now we're going to call it from the route section, and use a ternary operator on it, just like we did with the links:
+
+```
+{this.state.loggedInStatus === "LOGGED_IN" ? this.AuthorisedPages() : null}
+```
+
 
