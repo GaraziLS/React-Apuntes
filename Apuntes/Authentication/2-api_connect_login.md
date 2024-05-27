@@ -1,6 +1,6 @@
 # Creating an authentication session in React
 
-Now we'll actually login. by connecting to the API. At the very top of the login component we'll import axios:
+Now we'll actually login by connecting to the API. At the very top of the login component we'll import axios:
 
 ```
 import axios from "axios";

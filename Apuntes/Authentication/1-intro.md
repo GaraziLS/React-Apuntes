@@ -1,6 +1,6 @@
 ## What's authentication?
 
-Authentication is a way of identifying yourself. It often requires a user to first sign up and then log in. In a portfolio only the owner should log in, so it won't be visibe to other users and if someone tries to enter an error is going to pop up. First we're going to create the page component inside the **app.js** file, as well as importing in from the app and creating its route:
+Authentication is a way of identifying yourself. It often requires a user to first sign up and then log in. In a portfolio only the owner should log in, so it won't be visibe to other users and if someone tries to enter an error is going to pop up. First we're going to create the component as well as importing in from the **app.js file** and creating its route:
 
 ```
 import Auth from "./pages/auth"
