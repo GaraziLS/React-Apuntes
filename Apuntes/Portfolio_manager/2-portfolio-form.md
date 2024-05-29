@@ -180,7 +180,7 @@ BuildForm() {
 }
 ```
 
-The append method takes two arguments: The first is going to be a string and it's going to be the string and structure that our API expects. That structure is going to be portfolio, underscore item, and then name, and name is gonna be in brackets, and then with a comma, 'cause we're making a second argument this.state.name.
+The append method takes two arguments: The first is going to be a string and it's going to be the string and structure that our API expects. That structure is going to be portfolio, underscore item, and then name, and name is gonna be in brackets, and then with a comma, 'cause we're making a second argument ``this.state.name``.
 
 ```
 BuildForm() {
@@ -211,7 +211,7 @@ That calling will be placed inside the handleSubmit() event.
 
 ```
 handleSubmit(event) {
-    this.BbuildForm();
+    this.BuildForm();
     event.preventDefault();
   }
 ```
@@ -251,4 +251,140 @@ Now we're going to build the promise, and now we have the ability to create new 
 
     event.preventDefault();
   }
-````
+```
+
+## Select Dropdown in React
+
+The description of the form should be a text area and the category should be a dropdown. In the category input we'll change that input to a select tag. The type and the placeholder can be removed, so we get this:
+
+```
+<select
+  name="category"
+  value={this.state.category}
+  onChange={this.handleChange}
+    />
+  </div>
+```
+
+Now inside it we need to include the options.
+
+```
+<select
+    name="category"
+    value={this.state.category}
+    onChange={this.handleChange}
+
+    <option value="Bussiness">Bussiness</option>
+    <option value="Comissions">Comissions</option>
+    <option value="Personal">Personal</opt
+    </select>
+</div>
+```
+
+## Text area
+
+All we have to do is come to an imput and change the tag with ```textarea``.
+
+```
+<textarea
+     type="text"
+     name="description"
+     placeholder="Description"
+     value={this.state.description}
+     onChange={this.handleChange}
+   />
+ </div>
+```
+
+## Implementing a Base State Value for a React Select Tag
+
+Our application has a small bug in it. That bug is that even though our form begins with a default value for the category, when we hit save, no category is getting pushed up.
+
+The select tag only works when it's been changed (because it has the handleChange method on it), and because the default state is empty. To fix this, we can simply update the string with a default value:
+
+```
+this.state = {
+      name: "",
+      description: "",
+      category: "Bussiness",
+      position: "",
+      url: "",
+      thumb_image: "",
+      banner_image: "",
+      logo: ""
+    };
+```
+
+This way, the constructor is going to run when the class is initiated.
+
+# Connect the portfolio form with the portfolio manager
+
+Now we'll create a feature that connects the form with the sidebar so when we create a new record from the form it applears on the sidebar.
+
+In the **portfolio-manager.js** file we're going to copy the ``handleSuccessfulFormSubmission`` portion and paste it in the handle submit's then promise (inside the **portfolio-form**):
+
+```
+handleSubmit(event) {
+    axios
+      .post(
+        "https://garazils.devcamp.space/portfolio/portfolio_items",
+        this.buildForm(),
+        { withCredentials: true }
+      )
+      .then(response => {
+        this.props.handleSuccessfulFormSubmission
+        console.log("response", response);
+      })
+}
+```
+_______________ **REVIEW PORTION**_______________________
+
+> We have a default state of portfolioItems which is an array and then when the component mounts we're calling getPortfolioItems and we are populating that array.
+
+```
+this.state= {
+  portfolioItems: []
+(...)
+
+getPortfolioItems() {
+    axios.get("https://garazils.devcamp.space/portfolio/portfolio_items", { 
+    withCredentials: true
+  }).then(response => {
+    this.setState({
+        portfolioItems: [...response.data.portfolio_items]
+    }))}
+
+    (...)
+
+    componentDidMount() {
+this.getPortfolioItems();  
+}}
+```
+
+_____________**END OF REVIEW PORTION**___________________
+
+Now inside the ``handleSuccessfulFormSubmission`` (in the **portfolio-manager.js** file) function we'll update state. 
+
+```
+handleSuccessfulFormSubmission(portfolioItem) {
+    this.setState({
+        portfolioItems: [portfolioItem]
+    })
+}
+```
+
+So we're putting the portfolioItem inside an array. From there we're going to call the concat method to concatenate the other records by calling the state directly.
+
+```
+handleSuccessfulFormSubmission(portfolioItem) {
+    this.setState({
+        portfolioItems: [portfolioItem].concat(this.state.portfolioItems)
+    })
+}
+```
+
+> The connection works because we passed props to the portfolio-sidebar-list.
+
+Now the new items appear in the sidebar, on top of the others but if we refresh, the API puts everything all the way down. To fix this (specific to the API we're using), in the **portfolio-manager.js** file, in the url, we'll type this: ```?order_by=created_at&direction=desc```. Now everything is sorted descendantly. Most APIs have optional parameters.
+
+
