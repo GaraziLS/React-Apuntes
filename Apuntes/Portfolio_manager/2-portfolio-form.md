@@ -192,7 +192,7 @@ BuildForm() {
 
 We're gonna repeat this for the other form elements as well.
 
-Now we'll return the full object, ahd need to call it as well:
+Now we'll return the full object, and need to call it as well:
 
 ```
 BuildForm() {
@@ -373,7 +373,15 @@ handleSuccessfulFormSubmission(portfolioItem) {
 }
 ```
 
-So we're putting the portfolioItem inside an array. From there we're going to call the concat method to concatenate the other records by calling the state directly.
+So we're putting the portfolioItem (which is created inside the **portfolio-sidebar.js**)
+
+```
+const PortfolioSidebarList = (props) => {
+    const PortfolioList = props.data.map(PortfolioItem => {
+        return (
+```
+
+ inside an array. From there we're going to call the concat method to concatenate the other records by calling the state directly.
 
 ```
 handleSuccessfulFormSubmission(portfolioItem) {
