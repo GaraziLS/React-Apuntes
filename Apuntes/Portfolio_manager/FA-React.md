@@ -41,7 +41,7 @@ import { FontAwesome } from "@fortawesome/react-awesome";
 Now that we have that, we can call this component like before, but Font Awesome in React is quite tricky when multiple word icon names are involved. But in the import of the icons (in the **app.js** file) we have the names for the icons (after the fa portion: in this case, just ```SignOutAlt```, that must be written all in lowercase.)
 
 ```
-<FontAwesomeIcon icon="fa-solid sign-out-alt" />
+<FontAwesomeIcon icon="sign-out-alt" />
 ```
 
 Now we can add styles.
