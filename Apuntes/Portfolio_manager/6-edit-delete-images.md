@@ -171,7 +171,7 @@ Now we'll add styles.
 
 ### Fixing a bug
 
-Before continuing, there's a bug in the app. Ifonly some of the three dropzones are filled, when filling the others there's a bug related to images not showing, and no longer is a dropzone component. The system is updating the state and is showing an image that doesn't exist. To fix this we're going to give different names to the images when they're in edit mode.
+Before continuing, there's a bug in the app. If only some of the three dropzones are filled, when filling the others there's a bug related to images not showing, and no longer is a dropzone component. The system is updating the state and is showing an image that doesn't exist. To fix this we're going to give different names to the images when they're in edit mode.
 
 So with the edits, we have: 
 

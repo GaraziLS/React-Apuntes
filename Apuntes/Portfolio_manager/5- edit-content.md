@@ -105,7 +105,7 @@ componentDidUpdate() {
 
  However, every time a user is making a change such as typing in the form, the conditional is going to fire and clear everything out.
 
- To avoid this, we can call the ``clearPortfolioEdit`` method inside this method. When this component changes is gonna skip the conditional 'cause it's gonna be empty already.
+ To avoid this, we can call the ``clearPortfolioToEdit`` method inside this method. When this component changes is gonna skip the conditional 'cause it's gonna be empty already.
 
  ```
  componentDidUpdate() {
@@ -122,7 +122,7 @@ componentDidUpdate() {
         logo_url
       } = this.props.portfolioToEdit;
 
-      this.props.clearPortfolioEdit()
+      this.props.clearPortfolioToEdit()
     }
   }
   ```
