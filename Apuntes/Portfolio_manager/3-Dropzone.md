@@ -4,7 +4,7 @@ Now we'll install a library called Dropzone React Component to allow drag and dr
 
 ## Integrating React Dropzone Component into the Portfolio Form
 
-In the **portfolio-form.js** file, we'll import the Dropzone component, as well as some style sheets specific to it that allow image previews and have some icons. To di this we'll go to the node_modules directory and search de Dropzone component. Inside of it we'll go to dist > min and search for dropzone.min.css. We'll repeat the process for another library (react-dropzone-component).
+In the **portfolio-form.js** file, we'll import the Dropzone component, as well as some style sheets specific to it that allow image previews and have some icons. To do this we'll go to the node_modules directory and search the Dropzone component. Inside of it we'll go to dist > min and search for dropzone.min.css. We'll repeat the process for another library (react-dropzone-component).
 
 ```
 import DropzoneComponent from "react-dropzone-component";
