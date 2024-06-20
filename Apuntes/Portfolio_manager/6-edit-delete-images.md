@@ -200,7 +200,7 @@ componentDidUpdate() {
         position: position || "",
         url: url || "",
         editMode: true,
-        apiUrl: `https://jordan.devcamp.space/portfolio/portfolio_items/${id}`,
+        apiUrl: `https://garazils.devcamp.space/portfolio/portfolio_items/${id}`,
         apiAction: "patch",
         thumb_image_url: thumb_image_url || "",
         banner_image_url: banner_image_url || "",

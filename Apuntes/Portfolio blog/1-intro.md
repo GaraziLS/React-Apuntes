@@ -79,7 +79,7 @@ class Blog extends Component {
 
 getBlogItems() {
   axios
-    .get("https://jordan.devcamp.space/portfolio/portfolio_blogs", {
+    .get("https://garazils.devcamp.space/portfolio/portfolio_blogs", {
       withCredentials: true
     })
     .then(response => {
@@ -105,7 +105,7 @@ Once we get our response back, we can see the data attribute and inside of it mo
 ```
  getBlogItems() {
     axios
-      .get("https://jordan.devcamp.space/portfolio/portfolio_blogs", {
+      .get("https://garazils.devcamp.space/portfolio/portfolio_blogs", {
         withCredentials: true
       })
       .then(response => {

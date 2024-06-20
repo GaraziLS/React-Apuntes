@@ -80,7 +80,7 @@ const NavigationComponent = props => {
         </div>
       </div>
 
-      <div className="right-side">JORDAN HUDGENS</div>
+      <div className="right-side">garazils HUDGENS</div>
     </div>
   );
 };

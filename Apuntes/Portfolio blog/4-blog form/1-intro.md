@@ -16,15 +16,15 @@ We're not gonna connect to the API yet or anything like that. Right here, we're 
             }
         }
 
-        this.handleSuccessfulBlogFormSubmission = this. handleSuccessfulBlogFormSubmission.bind(this)
+        this.handleSuccessfullFormSubmission = this. handleSuccessfullFormSubmission.bind(this)
     }
 
-    handleSuccessfulBlogFormSubmission(blog) {
+    handleSuccessfullFormSubmission(blog) {
         console.log("blog from blog form that comes through the API", blog)
 
     (...)
 
-     <BlogForm handleSuccessfulBlogFormSubmission={this.handleSuccessfulBlogFormSubmission}/>
+     <BlogForm handleSuccessfullFormSubmission={this.handleSuccessfullFormSubmission}/>
 ```
 
 In the **blog-form.js** file we'll set a base state because we need to update the component state everytime the form is changed.
@@ -95,7 +95,7 @@ this.handleSubmit = this.handleSubmit.bind(this)
 }
 
         handleSubmit(event) {
-            this.props.handleSuccessfulBlogFormSubmission(this.state)
+            this.props.handleSuccessfullFormSubmission(this.state)
             event.preventDefault()
         }
 
@@ -104,9 +104,9 @@ this.handleSubmit = this.handleSubmit.bind(this)
         <form onSubmit={this.handleSubmit}>
 ```
 
-> The ``handleSuccessfulBlogFormSubmission`` methos is already passed in the ``blog-modal.js`` file.
+> The ``handleSuccessfullFormSubmission`` methos is already passed in the ``blog-modal.js`` file.
 
-The handleSuccessfulBlogFormSubmission(this.state) will get the API petition later.
+The handleSuccessfullFormSubmission(this.state) will get the API petition later.
 
 Now if we type something and hit save the console will log the response.
 
@@ -137,14 +137,14 @@ handleSubmit(event) {
             this.buildForm(),
             { withCredentials: true}
         )
-        this.props.handleSuccessfulBlogFormSubmission(this.state);
+        this.props.handleSuccessfullFormSubmission(this.state);
         event.preventDefault();
     }
 ```
 
 After the url, the next argument is where we're passing our data, in this case, the buildForm method. And then we're passing the withCredentials: True because this is a blog form that wi'll be written when we are logged in.
 
-From there, we will build the promise. We need to tell axios what to do when that response comes back, so I'm gonna say then response and then pass in a function and for right now let's just console.log it but we're not gonna console.log in the handleSubmit, remember, that's exactly what our prop ``(handleSuccessfulBlogFormSubmission)`` does. Instead of the this.state, we're going to pass the response.
+From there, we will build the promise. We need to tell axios what to do when that response comes back, so I'm gonna say then response and then pass in a function and for right now let's just console.log it but we're not gonna console.log in the handleSubmit, remember, that's exactly what our prop ``(handleSuccessfullFormSubmission)`` does. Instead of the this.state, we're going to pass the response.
 
 ```
  handleSubmit(event) {
@@ -153,7 +153,7 @@ From there, we will build the promise. We need to tell axios what to do when tha
                 this.buildForm(),
                 { withCredentials: true}
             ).then(response => {
-                this.props.handleSuccessfulBlogFormSubmission(response.data);
+                this.props.handleSuccessfullFormSubmission(response.data);
             })
             .catch(error => {
                 console.log("handleSubmit for blog error", error);
@@ -170,16 +170,16 @@ We'll start in the **blog-form.js** file (child of *blog-modal.js*). In order to
 
 The value is pulled from the state value.
 
-We're already communicated with the parent component ``handleSuccessfulBlogFormSubmission, that method is estabished in the **blog-modal.js** file)``. We'll also update that method to send the record directly to the **Blog-modal.js** file.
+We're already communicated with the parent component ``handleSuccessfullFormSubmission, that method is estabished in the **blog-modal.js** file)``. We'll also update that method to send the record directly to the **Blog-modal.js** file.
 
 ```
-this.props.handleSuccessfulBlogFormSubmission(response.data.portfolio_blog)
+this.props.handleSuccessfullFormSubmission(response.data.portfolio_blog)
 ```
 
-In the **blog-modal.js** file we're going to work with the ``handleSuccessfulBlogFormSubmission`` method. We'll first remove the console.log.
+In the **blog-modal.js** file we're going to work with the ``handleSuccessfullFormSubmission`` method. We'll first remove the console.log.
 
 ```
-handleSuccessfulBlogFormSubmission(blog) {
+handleSuccessfullFormSubmission(blog) {
         this.props.handleSuccessfulNewBlogSubmission(blog)
     }
 ```
@@ -218,3 +218,86 @@ Now we need to pass that method to the ``BlogModal`` that's in the **blog-form.j
 
 Now we'll add styles to the form.
 
+
+## Building the Styles for the New Blog Icon with a Fixed Position on the Page
+
+We'll import an icon to create a new blog from there. We'll import the icon from the **app.js** file. Then in the **blog.js** file we'll bring the icon in in place of the *Open Modal* text link:
+
+```
+<div className="new-blog-link">
+          <a onClick={this.handleNewBlogClick}><FontAwesomeIcon icon="circle-plus"></FontAwesomeIcon></a>
+        </div>
+```
+
+Now we can add styles.
+
+## Revisiting Render Props and Passing the Logged In Status to Child Components
+
+We have the blog creation button, but it's still there when we log out. This can lead to issues because when logged out we don't want to create blogs. The system itself would actually throw an error because it wouldn't recognize the user and so it wouldn't let the records to be created anyway, so this little button here would just be confusing.
+
+We are going to tap into our state's logged in status, the state for the entire application, the parent component and we're gonna see how we can pass that state down using render props directly into the blog component.
+
+In the **app.js** file we already passed render props to the auth route. We're going to replicate that for the blog one.
+
+However, the auth render props carry () instead of {}, which the blog route have. Now the latter would throw an error. That's because how explicit and implicit returns work. If you use {} you must use the *return* reserved word. However, you can skip the return if you type the entire function in one line or if you use () (this only works with JSX).
+
+So we get this: 
+
+```
+<Route
+   path="/blog"
+   render={props => (
+     <Blog {...props} loggedInStatus={this.state.loggedInStatus} />
+   )}
+ />
+```
+
+Now we can use a ternary operator to hide the new blog creation link, which is in the **blog.js** file.
+
+```
+{this.props.loggedInStatus === "LOGGED_IN" ? (
+          <div className="new-blog-link">
+            <a onClick={this.handleNewBlogClick}>
+              <FontAwesomeIcon icon="plus-circle" />
+            </a>
+          </div>
+        ) : null}
+```
+
+Now the icon disappears when we log out.
+
+## Building a Dedicated Icon Helper File in React
+
+We will refactor all the app to pull out the icon calls from the **app.js** file. In the src folder we'll create another folder called helpers.
+
+```
+import {
+    faTrash,
+    faSignOutAlt,
+    faEdit,
+    faSpinner,
+    faPlusCircle
+  } from "@fortawesome/free-solid-svg-icons";
+  import { library } from "@fortawesome/fontawesome-svg-core";
+
+  const Icons = () => {
+  return library.add(faTrash, faSignOutAlt, faEdit, faSpinner, faPlusCircle); }
+
+  export default Icons;
+  ```
+
+  Now we can call the function from the app file.
+
+  ```
+  import Icons from "../helpers/icons";
+
+  (...)
+
+  export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    Icons()
+```
+
+And the icons still work.
