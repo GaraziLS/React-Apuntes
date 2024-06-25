@@ -64,3 +64,106 @@ Now we're gonna create buttons inside the render function, and the event listene
 
 However, all of this only work once because when clicking on other buttons the content disappears. This happens because the state changes completely and it ignores the other buttons. We'll fix this later.
 
+## Full Filtering Feature Build Out in React
+
+Now, we'll build the full Filter feature. Until now, when we clicked a second time on a filter, the screen goes blank. We want to reset the filter once it's filtered to view all the items again and to re-apply the filter again.
+
+First, we're going to create another button that clears the filter. Second, we're going to work on the getPortfolioItem to be dynamic so in some cases it returns the filter items and in others all the items.
+
+We'll start in the **portfolio-container.js** file. After wrapping all the buttons inside some divs, we'll add another button to clear all the filters.
+
+After giving some styles, we'll come to the handleFilter function to add a conditional.
+
+```
+handleFilter(filter) {
+    if (filter === "CLEAR_FILTERS") {
+      this.getPortfolioItems();
+    } else {
+      this.setState({
+        data: this.state.data.filter(item => {
+          return item.category === filter;
+        })
+      });
+    }
+  }
+```
+
+This is calling the getPortfolioItems function, which calls the API and brings in all the data. Thus, the filter is cleared if we click the All tab.
+
+That's the first part of it, because if we click a second time on a filter the screen goes blank.
+
+To fix this, we'll add an argument into the <u>getPortfolioItems</u> method:
+
+```
+getPortfolioItems(filter = null)
+```
+
+This allows us to,  in JavaScript, what this allows us to do is that ***this is saying that filter is optional***. You don't have to pass one in but if you do, the function can actually work with it.
+
+So we will add more conditionals.
+
+```
+getPortfolioItems(filter = null) {
+    axios
+      .get("https://garazils.devcamp.space/portfolio/portfolio_items")
+      .then(response => {
+        if (filter) {
+          this.setState({
+            data: response.data.portfolio_items
+          });
+        } else {
+          this.setState({
+            data: response.data.portfolio_items
+          });
+        }
+```
+
+So first we pass in the data in the two parts of the conditional. Second, in the handle filter method
+
+```
+handleFilter(filter) {
+    if (filter === "CLEAR_FILTERS") {
+      this.getPortfolioItems();
+    } else {
+      this.setState({
+        data: this.state.data.filter(item => {
+          return item.category === filter;
+        })
+```
+
+we can ***cut the .filter*** portion and paste it in the <u>getPortfolioItems</u> method, in the if. Thus, if there's a filter, the loop will work, because we're iterating over the data:
+
+```
+ getPortfolioItems(filter = null) {
+    axios
+      .get("https://garazils.devcamp.space/portfolio/portfolio_items")
+      .then(response => {
+        if (filter) {
+          this.setState({
+            data: response.data.portfolio_items.filter(item => {
+              return item.category === filter;
+            })
+          });
+        } else {
+          this.setState({
+            data: response.data.portfolio_items
+          });
+        }
+      })
+```
+
+Now inside the handleFilter method we can cut the setState and do this:
+
+```
+handleFilter(filter) {
+    if (filter === "CLEAR_FILTERS") {
+      this.getPortfolioItems();
+    } else {
+      this.getPortfolioItems(filter)
+    }
+  }
+```
+
+So the getPortfolioItems will behave like there's no filter (thus returning the content) and like there is one (thus it will filter items).
+
+Now the filter is fully working.

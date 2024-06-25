@@ -34,4 +34,3 @@ Now we'll add the image with inline styles:
 
 > Go to styles-in-react.md file to learn more about this.
 
-## Building Contact Page Styles for the React Portfolio
